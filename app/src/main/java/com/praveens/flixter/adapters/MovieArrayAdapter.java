@@ -1,6 +1,7 @@
 package com.praveens.flixter.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,15 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         tvTitle.setText(movie.getOriginalTitle());
         tvOverview.setText(movie.getOverView());
 
-        Picasso.with(getContext()).load(movie.getPosterPath()).fit().centerCrop().placeholder(R.drawable.imageviewplaceholder).into(lvImage);
+        String imagePath = null;
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            imagePath = movie.getPosterPath();
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imagePath = movie.getBackdropPath();
+        }
+
+        Picasso.with(getContext()).load(imagePath).fit().centerCrop().placeholder(R.drawable.imageviewplaceholder).into(lvImage);
 
         viewHolder.title.setText(movie.getOriginalTitle());
         viewHolder.overview.setText(movie.getOverView());

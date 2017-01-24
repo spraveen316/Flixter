@@ -2,9 +2,11 @@ package com.praveens.flixter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,6 +34,15 @@ public class MovieActivity extends Activity {
     private ListView lvItems;
 
     private final String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+
+    public static Parcelable state;
+
+    @Override
+    public void onPause() {
+        // Save ListView state @ onPause
+        state = lvItems.onSaveInstanceState();
+        super.onPause();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +92,12 @@ public class MovieActivity extends Activity {
                     movieJSONResults = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJSONResults));
                     movieArrayAdapter.notifyDataSetChanged();
+
+                    // Restore previous state (including selected item index and scroll position)
+                    if (state != null) {
+                        lvItems.onRestoreInstanceState(state);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

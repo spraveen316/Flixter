@@ -14,12 +14,12 @@ The following **required** functionality is completed:
 * [X] Displays a nice default placeholder graphic for each image during loading.
 * [X] User can pull-to-refresh the popular stream with SwipeRefreshLayout.
 * [X] Lists should be fully optimized for performance with the ViewHolderPattern.
-* [ ] Views should be responsive for both landscape/portrait mode.
-* [ ] In portrait mode, the poster image, title, and movie overview is shown.
-* [ ] In landscape mode, the rotated layout should use the backdrop image instead and show the title and movie overview to the right of it.
+* [X] Views should be responsive for both landscape/portrait mode.
+* [X] In portrait mode, the poster image, title, and movie overview is shown.
+* [X] In landscape mode, the rotated layout should use the backdrop image instead and show the title and movie overview to the right of it.
 
 The following **optional** features are implemented:
-
+* [X] State is maintained on scrolling and shifting between orientations.
 
 The following **additional** features are implemented:
 
