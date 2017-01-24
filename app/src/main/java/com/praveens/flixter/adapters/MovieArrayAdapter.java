@@ -20,6 +20,14 @@ import java.util.List;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
+
+    // View lookup cache
+    private static class ViewHolder {
+        TextView title;
+        TextView overview;
+        ImageView posterImage;
+    }
+
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
     }
@@ -29,10 +37,24 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Movie movie = getItem(position);
 
+        ViewHolder viewHolder;
+
         if (convertView == null) {
+            viewHolder = new ViewHolder();
             LayoutInflater inflator = LayoutInflater.from(getContext());
+
             convertView = inflator.inflate(R.layout.item_movie, parent, false);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
+            viewHolder.overview = (TextView) convertView.findViewById(R.id.tvOverview);
+            viewHolder.posterImage = (ImageView) convertView.findViewById(R.id.lvMovieImage);
+            // Cache the viewHolder object inside the fresh view
+            convertView.setTag(viewHolder);
+
+        } else {
+            // View is being recycled, retrieve the viewHolder object from tag
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
         ImageView lvImage = (ImageView) convertView.findViewById(R.id.lvMovieImage);
         lvImage.setImageResource(0);
 
@@ -42,6 +64,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         tvOverview.setText(movie.getOverView());
 
         Picasso.with(getContext()).load(movie.getPosterPath()).fit().centerCrop().placeholder(R.drawable.imageviewplaceholder).into(lvImage);
+
+        viewHolder.title.setText(movie.getOriginalTitle());
+        viewHolder.overview.setText(movie.getOverView());
+        viewHolder.posterImage = lvImage;
 
         return convertView;
 
