@@ -31,6 +31,8 @@ public class MovieActivity extends Activity {
     private MovieArrayAdapter movieArrayAdapter;
     private ListView lvItems;
 
+    private final String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +43,30 @@ public class MovieActivity extends Activity {
         movieArrayAdapter = new MovieArrayAdapter(this, movies);
         lvItems.setAdapter(movieArrayAdapter);
 
-        final String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
         final AsyncHttpClient client = new AsyncHttpClient();
 
-        lvItems = (ListView) findViewById(lvMovies);
-        movies = new ArrayList<>();
-        movieArrayAdapter = new MovieArrayAdapter(this, movies);
-        lvItems.setAdapter(movieArrayAdapter);
+        fetchMoviesAsync(client);
 
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.activity_movie);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                fetchMoviesAsync(client);
+                // Make sure you call swipeContainer.setRefreshing(false) once the network request has completed successfully.
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+    }
+
+    private void fetchMoviesAsync(AsyncHttpClient client) {
         client.get(url, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -63,47 +81,11 @@ public class MovieActivity extends Activity {
                     movieJSONResults = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJSONResults));
                     movieArrayAdapter.notifyDataSetChanged();
-                    Log.d("DEBUG", movieJSONResults.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.activity_movie);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                client.get(url, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        JSONArray movieJSONResults = null;
-
-                        try {
-                            movieJSONResults = response.getJSONArray("results");
-                            movies.addAll(Movie.fromJSONArray(movieJSONResults));
-                            movieArrayAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                // Make sure you call swipeContainer.setRefreshing(false) once the network request has completed successfully.
-                swipeContainer.setRefreshing(false);
-            }
-        });
-
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
     }
 
 }
