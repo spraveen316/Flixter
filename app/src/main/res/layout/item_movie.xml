@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/FlixterThemeSelector"
     android:orientation="vertical">
 
     <ImageView
@@ -16,23 +17,23 @@
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:text="TextView"
-        android:textSize="@dimen/font_size_small"
+        android:id="@+id/tvTitle"
+        style="@style/FlixterThemeSelector.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvTitle"
-        tools:text="Moana"
-        android:layout_toRightOf="@+id/lvMovieImage" />
+        android:layout_toRightOf="@+id/lvMovieImage"
+        android:text="TextView"
+        tools:text="Moana" />
 
     <TextView
-        android:text="TextView"
-        android:textSize="@dimen/font_size_extra_small"
+        android:id="@+id/tvOverview"
+        style="@style/FlixterThemeSelector.Overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvOverview"
-        tools:text="In Ancient Polynesia, when a terrible curse incurred by Maui reaches an impetuous Chieftain's daughter's island, she answers the Ocean's call to seek out the demigod to set things right."
-        android:layout_toRightOf="@+id/lvMovieImage"
         android:layout_below="@+id/tvTitle"
-        android:maxLines="3" />
+        android:layout_toRightOf="@+id/lvMovieImage"
+        android:maxLines="3"
+        android:text="TextView"
+        tools:text="In Ancient Polynesia, when a terrible curse incurred by Maui reaches an impetuous Chieftain's daughter's island, she answers the Ocean's call to seek out the demigod to set things right." />
 
 </RelativeLayout>
