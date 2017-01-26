@@ -25,6 +25,7 @@ The following **optional** advanced user stories are implemented:
 
 The following **additional** features are implemented:
 
+* [X] Used RecyclerView which is a more advanced and more flexible version of the ListView.
 
 ## Video Walkthrough
 

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.praveens.flixter.adapters.MovieArrayAdapter;
+import com.praveens.flixter.adapters.MovieRecyclerViewAdapter;
 import com.praveens.flixter.models.Movie;
 
 import org.json.JSONArray;
@@ -30,8 +33,10 @@ public class MovieActivity extends Activity {
     private SwipeRefreshLayout swipeContainer;
 
     private List<Movie> movies = new ArrayList<Movie>();
-    private MovieArrayAdapter movieArrayAdapter;
-    private ListView lvItems;
+    //private MovieArrayAdapter movieArrayAdapter;
+    private MovieRecyclerViewAdapter recyclerViewAdapter;
+    //private ListView lvItems;
+    private RecyclerView recyclerView;
 
     private final String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
@@ -40,7 +45,8 @@ public class MovieActivity extends Activity {
     @Override
     public void onPause() {
         // Save ListView state @ onPause
-        state = lvItems.onSaveInstanceState();
+        //state = lvItems.onSaveInstanceState();
+        state = recyclerView.getLayoutManager().onSaveInstanceState();
         super.onPause();
     }
 
@@ -49,14 +55,23 @@ public class MovieActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
-        lvItems = (ListView) findViewById(lvMovies);
+        recyclerView = (RecyclerView) findViewById(R.id.lvMovies);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // lvItems = (ListView) findViewById(lvMovies);
         movies = new ArrayList<Movie>();
-        movieArrayAdapter = new MovieArrayAdapter(this, movies);
-        lvItems.setAdapter(movieArrayAdapter);
+        // recyclerViewAdapter = new MovieRecyclerViewAdapter(this, movies);
+        // recyclerView.setAdapter(recyclerViewAdapter);
+        // movieArrayAdapter = new MovieArrayAdapter(this, movies);
+        // lvItems.setAdapter(movieArrayAdapter);
 
         final AsyncHttpClient client = new AsyncHttpClient();
 
         fetchMoviesAsync(client);
+
+        recyclerViewAdapter = new MovieRecyclerViewAdapter(this, movies);
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.notifyDataSetChanged();
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.activity_movie);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -77,7 +92,8 @@ public class MovieActivity extends Activity {
 
     }
 
-    private void fetchMoviesAsync(AsyncHttpClient client) {
+    private void fetchMoviesAsync(final AsyncHttpClient client) {
+
         client.get(url, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -91,11 +107,13 @@ public class MovieActivity extends Activity {
                 try {
                     movieJSONResults = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJSONResults));
-                    movieArrayAdapter.notifyDataSetChanged();
+                    //movieArrayAdapter.notifyDataSetChanged();
+                    recyclerViewAdapter.notifyDataSetChanged();
 
                     // Restore previous state (including selected item index and scroll position)
                     if (state != null) {
-                        lvItems.onRestoreInstanceState(state);
+                        //lvItems.onRestoreInstanceState(state);
+                        recyclerView.getLayoutManager().onRestoreInstanceState(state);
                     }
 
                 } catch (JSONException e) {
