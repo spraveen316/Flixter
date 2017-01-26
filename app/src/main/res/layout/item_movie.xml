@@ -9,8 +9,9 @@
 
     <ImageView
         android:id="@+id/lvMovieImage"
-        android:layout_width="50dp"
-        android:layout_height="75dp"
+        android:layout_width="60dp"
+        android:layout_height="90dp"
+        android:paddingRight="7dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -20,9 +21,9 @@
         android:id="@+id/tvTitle"
         style="@style/FlixterThemeSelector.Title"
         android:layout_width="wrap_content"
+        android:paddingBottom="3dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/lvMovieImage"
-        android:text="TextView"
         tools:text="Moana" />
 
     <TextView
@@ -33,7 +34,6 @@
         android:layout_below="@+id/tvTitle"
         android:layout_toRightOf="@+id/lvMovieImage"
         android:maxLines="3"
-        android:text="TextView"
         tools:text="In Ancient Polynesia, when a terrible curse incurred by Maui reaches an impetuous Chieftain's daughter's island, she answers the Ocean's call to seek out the demigod to set things right." />
 
 </RelativeLayout>
