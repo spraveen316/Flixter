@@ -4,12 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -26,8 +23,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.praveens.flixter.R.id.lvMovies;
-
 public class MovieActivity extends Activity {
 
     private SwipeRefreshLayout swipeContainer;
@@ -37,25 +32,26 @@ public class MovieActivity extends Activity {
     private MovieRecyclerViewAdapter recyclerViewAdapter;
     //private ListView lvItems;
     private RecyclerView recyclerView;
+    public static Parcelable state;
 
     private final String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
-    public static Parcelable state;
-
     @Override
-    public void onPause() {
-        // Save ListView state @ onPause
-        //state = lvItems.onSaveInstanceState();
-        state = recyclerView.getLayoutManager().onSaveInstanceState();
-        super.onPause();
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("recyclerview_state", recyclerView.getLayoutManager().onSaveInstanceState());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        if (savedInstanceState != null) {
+            state = savedInstanceState.getParcelable("recyclerview_state");
+        }
 
         recyclerView = (RecyclerView) findViewById(R.id.lvMovies);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // lvItems = (ListView) findViewById(lvMovies);
@@ -66,7 +62,6 @@ public class MovieActivity extends Activity {
         // lvItems.setAdapter(movieArrayAdapter);
 
         final AsyncHttpClient client = new AsyncHttpClient();
-
         fetchMoviesAsync(client);
 
         recyclerViewAdapter = new MovieRecyclerViewAdapter(this, movies);
@@ -77,7 +72,7 @@ public class MovieActivity extends Activity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                state = null;
                 fetchMoviesAsync(client);
                 // Make sure you call swipeContainer.setRefreshing(false) once the network request has completed successfully.
                 swipeContainer.setRefreshing(false);
@@ -102,7 +97,7 @@ public class MovieActivity extends Activity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray movieJSONResults = null;
+                JSONArray movieJSONResults;
 
                 try {
                     movieJSONResults = response.getJSONArray("results");
@@ -114,6 +109,7 @@ public class MovieActivity extends Activity {
                     if (state != null) {
                         //lvItems.onRestoreInstanceState(state);
                         recyclerView.getLayoutManager().onRestoreInstanceState(state);
+                        state = null;
                     }
 
                 } catch (JSONException e) {

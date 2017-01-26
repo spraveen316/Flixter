@@ -13,8 +13,6 @@ import com.praveens.flixter.R;
 import com.praveens.flixter.models.Movie;
 import com.squareup.picasso.Picasso;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
 
 /**
@@ -23,25 +21,29 @@ import java.util.List;
 
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.CustomViewHolder> {
     private List<Movie> movies;
-    private Context mContext;
+    private Context context;
 
     public MovieRecyclerViewAdapter(Context context, List<Movie> movies) {
         this.movies = movies;
-        this.mContext = context;
+        this.context = context;
+    }
+
+    private Context getContext() {
+        return context;
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_movie, null);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_movie, viewGroup, false);
         return new CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
-        Movie movie = movies.get(i);
+    public void onBindViewHolder(CustomViewHolder customViewHolder, int position) {
+        Movie movie = movies.get(position);
 
         String imagePath = null;
-        int orientation = mContext.getResources().getConfiguration().orientation;
+        int orientation = getContext().getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             imagePath = movie.getPosterPath();
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -49,7 +51,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         }
 
         //Render image using Picasso library
-        Picasso.with(mContext).load(imagePath)
+        Picasso.with(context).load(imagePath)
                 .error(R.drawable.imageviewplaceholder)
                 .placeholder(R.drawable.imageviewplaceholder)
                 .into(customViewHolder.posterImage);
@@ -57,6 +59,11 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         customViewHolder.title.setText(movie.getOriginalTitle());
         customViewHolder.overview.setText(movie.getOverView());
 
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return 0;
     }
 
     @Override
