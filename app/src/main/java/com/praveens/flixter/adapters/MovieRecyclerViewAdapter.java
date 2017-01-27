@@ -1,6 +1,7 @@
 package com.praveens.flixter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.praveens.flixter.MovieActivity;
+import com.praveens.flixter.MovieDetailsActivity;
 import com.praveens.flixter.R;
 import com.praveens.flixter.models.Movie;
 import com.praveens.flixter.viewholder.PopularViewHolder;
@@ -17,6 +21,8 @@ import com.praveens.flixter.viewholder.DefaultViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.R.attr.data;
 
 /**
  * Created by praveens on 1/25/17.
@@ -56,7 +62,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder customViewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder customViewHolder, final int position) {
         Movie movie = movies.get(position);
         //Render image using Picasso library
 
@@ -70,6 +76,22 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 configureDefaultViewHolder(defaultViewHolder, position);
                 break;
         }
+
+        customViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Movie movie = movies.get(position);
+                final Intent intent = new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra("title", movie.getOriginalTitle());
+                intent.putExtra("imagePath", movie.getBackdropPath());
+                intent.putExtra("releaseDate", movie.getReleaseDate());
+                intent.putExtra("votes", movie.getVote());
+                intent.putExtra("overview", movie.getOverView());
+
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -114,16 +136,4 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         return (null != movies ? movies.size() : 0);
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected ImageView posterImage;
-        protected TextView title;
-        protected TextView overview;
-
-        public CustomViewHolder(View view) {
-            super(view);
-            this.posterImage = (ImageView) view.findViewById(R.id.lvMovieImage);
-            this.title = (TextView) view.findViewById(R.id.tvTitle);
-            this.overview = (TextView) view.findViewById(R.id.tvOverview);
-        }
-    }
 }

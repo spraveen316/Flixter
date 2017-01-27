@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:scrollbarStyle="insideInset"
+    android:scrollbars="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/llContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/lvMovieImage"
+            android:layout_width="342dp"
+            android:layout_height="192dp"
+            android:layout_gravity="center_horizontal"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/FlixterThemeSelector.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            tools:text="Moana" />
+
+        <TextView
+            android:id="@+id/tvReleaseDate"
+            style="@style/FlixterThemeSelector.Overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            tools:text="2016-11-23" />
+
+        <RatingBar
+            android:id="@+id/rbStars"
+            style="?android:attr/ratingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:isIndicator="true"
+            android:numStars="10"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:stepSize="0.01" />
+
+        <TextView
+            android:id="@+id/tvOverview"
+            style="@style/FlixterThemeSelector.Overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            tools:text="In Ancient Polynesia, when a terrible curse incurred by Maui reaches an impetuous Chieftain's daughter's island, she answers the Ocean's call to seek out the demigod to set things right." />
+
+    </LinearLayout>
+</ScrollView>

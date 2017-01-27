@@ -20,11 +20,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/llContainer"
         android:layout_width="wrap_content"
-        android:layout_height="192dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
         android:layout_toRightOf="@+id/lvMovieImage"
+        android:layout_alignTop="@id/lvMovieImage"
+        android:layout_alignBottom="@id/lvMovieImage"
         android:padding="5dp">
 
         <TextView
