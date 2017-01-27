@@ -22,6 +22,7 @@ The following **optional** advanced user stories are implemented:
 
 * [X] State is maintained on scrolling and shifting between orientations.
 * [X] Used [Styles and Themes](http://guides.codepath.com/android/Styles-and-Themes).
+* [X] For popular movies (i.e. a movie with vote_average greater than 7), the full backdrop image is displayed. Otherwise, a poster image, the movie title, and overview is listed. [Heterogenous ListViews](http://guides.codepath.com/android/Implementing-a-Heterogenous-ListView) used.
 
 The following **additional** features are implemented:
 

@@ -6,11 +6,9 @@ import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.praveens.flixter.adapters.MovieArrayAdapter;
 import com.praveens.flixter.adapters.MovieRecyclerViewAdapter;
 import com.praveens.flixter.models.Movie;
 
