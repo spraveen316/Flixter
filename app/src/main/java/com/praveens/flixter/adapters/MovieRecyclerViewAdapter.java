@@ -81,13 +81,8 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
                 Movie movie = movies.get(position);
-                final Intent intent = new Intent(context, MovieDetailsActivity.class);
-                intent.putExtra("title", movie.getOriginalTitle());
-                intent.putExtra("imagePath", movie.getBackdropPath());
-                intent.putExtra("releaseDate", movie.getReleaseDate());
-                intent.putExtra("votes", movie.getVote());
-                intent.putExtra("overview", movie.getOverView());
-
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra("movie", movie);
                 context.startActivity(intent);
 
             }

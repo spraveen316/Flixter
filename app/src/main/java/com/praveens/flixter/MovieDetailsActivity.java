@@ -7,6 +7,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.praveens.flixter.models.Movie;
+
 import com.squareup.picasso.Picasso;
 
 /**
@@ -32,12 +34,14 @@ public class MovieDetailsActivity extends Activity {
         ivImage = (ImageView) findViewById(R.id.lvMovieImage);
         rbStars = (RatingBar) findViewById(R.id.rbStars);
 
-        tvTitle.setText(getIntent().getStringExtra("title"));
-        tvReleaseDate.setText(getIntent().getStringExtra("releaseDate"));
-        tvOverview.setText(getIntent().getStringExtra("overview"));
-        rbStars.setRating(Float.valueOf(getIntent().getStringExtra("votes")));
+        Movie movie = (Movie) getIntent().getSerializableExtra("movie");
 
-        Picasso.with(getApplicationContext()).load(getIntent().getStringExtra("imagePath"))
+        tvTitle.setText(movie.getOriginalTitle());
+        tvReleaseDate.setText(movie.getReleaseDate());
+        tvOverview.setText(movie.getOverView());
+        rbStars.setRating(Float.valueOf(movie.getVote()));
+
+        Picasso.with(getApplicationContext()).load(movie.getBackdropPath())
                 .error(R.drawable.imageviewplaceholder)
                 .placeholder(R.drawable.imageviewplaceholder)
                 .into(ivImage);

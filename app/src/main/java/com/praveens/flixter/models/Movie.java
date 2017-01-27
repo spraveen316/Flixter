@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by praveens on 1/23/17.
  */
 
-public class Movie {
+public class Movie implements Serializable {
 
     private String posterPath;
     private String originalTitle;
