@@ -7,21 +7,26 @@ import android.widget.TextView;
 
 import com.praveens.flixter.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by praveens on 1/26/17.
  */
 
 public class DefaultViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView title, overview;
+    @BindView(R.id.tvTitle)
+    TextView title;
+    @BindView(R.id.tvOverview)
+    TextView overview;
 
+    @BindView(R.id.lvMovieImage)
     public ImageView movieImage;
 
-    public DefaultViewHolder(View v) {
-        super(v);
-        title = (TextView) v.findViewById(R.id.tvTitle);
-        overview = (TextView) v.findViewById(R.id.tvOverview);
-        movieImage = (ImageView) v.findViewById(R.id.lvMovieImage);
+    public DefaultViewHolder(View view) {
+        super(view);
+        ButterKnife.bind(this, view);
     }
 
     public TextView getTitle() {

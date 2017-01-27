@@ -8,11 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
-import com.praveens.flixter.MovieActivity;
 import com.praveens.flixter.MovieDetailsActivity;
 import com.praveens.flixter.R;
 import com.praveens.flixter.models.Movie;
@@ -46,7 +44,6 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        //View view = inflater.inflate(R.layout.item_movie, viewGroup, false);
         RecyclerView.ViewHolder viewHolder;
 
         switch (viewType) {
@@ -64,7 +61,6 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder customViewHolder, final int position) {
         Movie movie = movies.get(position);
-        //Render image using Picasso library
 
         switch (customViewHolder.getItemViewType()) {
             case POPULAR:

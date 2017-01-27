@@ -1,6 +1,8 @@
 package com.praveens.flixter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -11,28 +13,31 @@ import com.praveens.flixter.models.Movie;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by praveens on 1/26/17.
  */
 
 public class MovieDetailsActivity extends Activity {
 
-    private TextView tvTitle;
-    private TextView tvReleaseDate;
-    private TextView tvOverview;
-    private ImageView ivImage;
-    private RatingBar rbStars;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvReleaseDate)
+    TextView tvReleaseDate;
+    @BindView(R.id.tvOverview)
+    TextView tvOverview;
+    @BindView(R.id.lvMovieImage)
+    ImageView ivImage;
+    @BindView(R.id.rbStars)
+    RatingBar rbStars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moviedetail);
-
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
-        tvOverview = (TextView) findViewById(R.id.tvOverview);
-        ivImage = (ImageView) findViewById(R.id.lvMovieImage);
-        rbStars = (RatingBar) findViewById(R.id.rbStars);
+        ButterKnife.bind(this);
 
         Movie movie = (Movie) getIntent().getSerializableExtra("movie");
 

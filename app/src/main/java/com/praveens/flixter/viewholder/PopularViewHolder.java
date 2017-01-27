@@ -6,17 +6,21 @@ import android.widget.ImageView;
 
 import com.praveens.flixter.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by praveens on 1/26/17.
  */
 
 public class PopularViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.lvMovieImage)
     public ImageView movieImage;
 
-    public PopularViewHolder(View v) {
-        super(v);
-        movieImage = (ImageView) v.findViewById(R.id.lvMovieImage);
+    public PopularViewHolder(View view) {
+        super(view);
+        ButterKnife.bind(this, view);
     }
 
     public ImageView getMovieImage() {

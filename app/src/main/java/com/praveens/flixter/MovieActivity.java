@@ -24,15 +24,12 @@ import cz.msebera.android.httpclient.Header;
 public class MovieActivity extends Activity {
 
     private SwipeRefreshLayout swipeContainer;
-
     private List<Movie> movies = new ArrayList<Movie>();
-    //private MovieArrayAdapter movieArrayAdapter;
     private MovieRecyclerViewAdapter recyclerViewAdapter;
-    //private ListView lvItems;
     private RecyclerView recyclerView;
     public static Parcelable state;
 
-    private final String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+    private final String MOVIE_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -52,12 +49,7 @@ public class MovieActivity extends Activity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // lvItems = (ListView) findViewById(lvMovies);
         movies = new ArrayList<Movie>();
-        // recyclerViewAdapter = new MovieRecyclerViewAdapter(this, movies);
-        // recyclerView.setAdapter(recyclerViewAdapter);
-        // movieArrayAdapter = new MovieArrayAdapter(this, movies);
-        // lvItems.setAdapter(movieArrayAdapter);
 
         final AsyncHttpClient client = new AsyncHttpClient();
         fetchMoviesAsync(client);
@@ -72,12 +64,10 @@ public class MovieActivity extends Activity {
             public void onRefresh() {
                 state = null;
                 fetchMoviesAsync(client);
-                // Make sure you call swipeContainer.setRefreshing(false) once the network request has completed successfully.
                 swipeContainer.setRefreshing(false);
             }
         });
 
-        // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -87,7 +77,7 @@ public class MovieActivity extends Activity {
 
     private void fetchMoviesAsync(final AsyncHttpClient client) {
 
-        client.get(url, new JsonHttpResponseHandler() {
+        client.get(MOVIE_URL, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
@@ -100,12 +90,9 @@ public class MovieActivity extends Activity {
                 try {
                     movieJSONResults = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJSONResults));
-                    //movieArrayAdapter.notifyDataSetChanged();
                     recyclerViewAdapter.notifyDataSetChanged();
 
-                    // Restore previous state (including selected item index and scroll position)
                     if (state != null) {
-                        //lvItems.onRestoreInstanceState(state);
                         recyclerView.getLayoutManager().onRestoreInstanceState(state);
                         state = null;
                     }
