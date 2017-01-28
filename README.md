@@ -26,6 +26,8 @@ The following **optional** advanced user stories are implemented:
 * [X] Movie details (ratings using RatingBar, votes, and overview) are exposed in a separate activity.
 * [X] **Stretch**: Used ButterKnife annotation library to reduce view boilerplate.
 * [X] **Stretch**: Added a play icon overlay to popular movies to indicate that the movie can be played.
+* [X] **Stretch**: Video posts now play in full-screen using the [YouTubePlayerView](http://guides.codepath.com/android/Streaming-Youtube-Videos-with-YouTubePlayerView).
+    * When clicking on a popular movie (i.e. a movie with average greater than 7 of more than 7) the video should be played immediately.
 
 The following **additional** features are implemented:
 

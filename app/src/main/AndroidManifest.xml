@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.praveens.flixter.MovieDetailsActivity"></activity>
+        <activity android:name="com.praveens.flixter.MovieYoutubeActivity"></activity>
     </application>
 
 </manifest>

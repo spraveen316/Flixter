@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.praveens.flixter.MovieDetailsActivity;
+import com.praveens.flixter.MovieYoutubeActivity;
 import com.praveens.flixter.R;
 import com.praveens.flixter.models.Movie;
 import com.praveens.flixter.viewholder.PopularViewHolder;
@@ -66,23 +67,31 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             case POPULAR:
                 PopularViewHolder popularViewHolder = (PopularViewHolder) customViewHolder;
                 configurePopularViewHolder(popularViewHolder, movie);
+                popularViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Movie movie = movies.get(position);
+                        Intent intent = new Intent(context, MovieYoutubeActivity.class);
+                        intent.putExtra("movie", movie);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
             default:
                 DefaultViewHolder defaultViewHolder = (DefaultViewHolder) customViewHolder;
                 configureDefaultViewHolder(defaultViewHolder, position);
+                customViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Movie movie = movies.get(position);
+                        Intent intent = new Intent(context, MovieDetailsActivity.class);
+                        intent.putExtra("movie", movie);
+                        context.startActivity(intent);
+
+                    }
+                });
                 break;
         }
-
-        customViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Movie movie = movies.get(position);
-                Intent intent = new Intent(context, MovieDetailsActivity.class);
-                intent.putExtra("movie", movie);
-                context.startActivity(intent);
-
-            }
-        });
 
     }
 

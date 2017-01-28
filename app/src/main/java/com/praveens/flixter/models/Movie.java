@@ -20,6 +20,7 @@ public class Movie implements Serializable {
     private String backdropPath;
     private String vote;
     private String releaseDate;
+    private String id;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         this.posterPath = jsonObject.getString("poster_path");
@@ -28,6 +29,7 @@ public class Movie implements Serializable {
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.vote = jsonObject.getString("vote_average");
         this.releaseDate = jsonObject.getString("release_date");
+        this.id = jsonObject.getString("id");
     }
 
     public static List<Movie> fromJSONArray(JSONArray array) throws JSONException {
@@ -62,5 +64,9 @@ public class Movie implements Serializable {
 
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+    public String getId() {
+        return id;
     }
 }
