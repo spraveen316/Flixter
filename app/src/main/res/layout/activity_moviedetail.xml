@@ -16,12 +16,32 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/lvMovieImage"
-            android:layout_width="342dp"
-            android:layout_height="192dp"
-            android:layout_gravity="center_horizontal"
-            tools:src="@mipmap/ic_launcher" />
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            style="@style/FlixterThemeSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/lvMovieImage"
+                android:layout_width="342dp"
+                android:layout_height="192dp"
+                android:layout_gravity="center_horizontal"
+                tools:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/ivPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:alpha="0.5"
+                android:src="@drawable/play" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvTitle"

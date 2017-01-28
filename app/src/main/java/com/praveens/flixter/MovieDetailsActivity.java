@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class MovieDetailsActivity extends Activity {
         setContentView(R.layout.activity_moviedetail);
         ButterKnife.bind(this);
 
-        Movie movie = (Movie) getIntent().getSerializableExtra("movie");
+        final Movie movie = (Movie) getIntent().getSerializableExtra("movie");
 
         tvTitle.setText(movie.getOriginalTitle());
         tvReleaseDate.setText(movie.getReleaseDate());
@@ -50,6 +51,15 @@ public class MovieDetailsActivity extends Activity {
                 .error(R.drawable.imageviewplaceholder)
                 .placeholder(R.drawable.imageviewplaceholder)
                 .into(ivImage);
+
+        ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MovieYoutubeActivity.class);
+                intent.putExtra("movie", movie);
+                v.getContext().startActivity(intent);
+            }
+        });
 
     }
 }
