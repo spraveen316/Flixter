@@ -25,6 +25,7 @@ The following **optional** advanced user stories are implemented:
 * [X] For popular movies (i.e. a movie with vote_average greater than 7), the full backdrop image is displayed. Otherwise, a poster image, the movie title, and overview is listed. [Heterogenous ListViews](http://guides.codepath.com/android/Implementing-a-Heterogenous-ListView) used.
 * [X] Movie details (ratings using RatingBar, votes, and overview) are exposed in a separate activity.
 * [X] **Stretch**: Used ButterKnife annotation library to reduce view boilerplate.
+* [X] **Stretch**: Added a play icon overlay to popular movies to indicate that the movie can be played.
 
 The following **additional** features are implemented:
 
