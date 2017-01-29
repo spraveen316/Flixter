@@ -9,12 +9,7 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
-import com.loopj.android.http.SyncHttpClient;
 import com.praveens.flixter.models.Movie;
-import com.squareup.picasso.Downloader;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -22,16 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
-
-import static com.praveens.flixter.MovieActivity.state;
 
 /**
  * Created by praveens on 1/27/17.
@@ -63,7 +51,7 @@ public class MovieYoutubeActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube);
 
-        Movie movie = (Movie) getIntent().getSerializableExtra("movie");
+        final Movie movie = (Movie) getIntent().getExtras().getParcelable("movie");
         final String trailerURL = String.format(MOVIE_TRAILER_URL, new Object[]{movie.getId()});
 
         YouTubePlayerView youTubePlayerView =
@@ -110,7 +98,7 @@ public class MovieYoutubeActivity extends YouTubeBaseActivity {
     }
 
     private String getJSONObjectFromURL(String urlString) {
-        HttpURLConnection urlConnection = null;
+        HttpURLConnection urlConnection;
         try {
             URL url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -120,15 +108,13 @@ public class MovieYoutubeActivity extends YouTubeBaseActivity {
             urlConnection.setDoOutput(true);
             urlConnection.connect();
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-            char[] buffer = new char[1024];
-            String jsonString = new String();
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
             br.close();
-            jsonString = sb.toString();
+            String jsonString = sb.toString();
             return parserTrailerJSONArray(new JSONObject(jsonString));
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,8 +123,3 @@ public class MovieYoutubeActivity extends YouTubeBaseActivity {
     }
 
 }
-
-
-
-
-

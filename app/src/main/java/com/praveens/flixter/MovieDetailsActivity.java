@@ -40,7 +40,7 @@ public class MovieDetailsActivity extends Activity {
         setContentView(R.layout.activity_moviedetail);
         ButterKnife.bind(this);
 
-        final Movie movie = (Movie) getIntent().getSerializableExtra("movie");
+        final Movie movie = (Movie) getIntent().getExtras().getParcelable("movie");
 
         tvTitle.setText(movie.getOriginalTitle());
         tvReleaseDate.setText(movie.getReleaseDate());
@@ -63,4 +63,3 @@ public class MovieDetailsActivity extends Activity {
 
     }
 }
-

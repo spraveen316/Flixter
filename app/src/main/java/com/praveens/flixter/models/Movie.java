@@ -4,7 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  * Created by praveens on 1/23/17.
  */
 
-public class Movie implements Serializable {
+public class Movie implements Parcelable {
 
     private String posterPath;
     private String originalTitle;
@@ -22,7 +24,44 @@ public class Movie implements Serializable {
     private String releaseDate;
     private String id;
 
-    public Movie(JSONObject jsonObject) throws JSONException {
+    private Movie(Parcel in) {
+        readFromParcel(in);
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(posterPath);
+        dest.writeString(originalTitle);
+        dest.writeString(overView);
+        dest.writeString(backdropPath);
+        dest.writeString(vote);
+        dest.writeString(releaseDate);
+        dest.writeString(id);
+    }
+
+    private void readFromParcel(Parcel in) {
+        posterPath = in.readString();
+        originalTitle = in.readString();
+        overView = in.readString();
+        backdropPath = in.readString();
+        vote = in.readString();
+        releaseDate = in.readString();
+        id = in.readString();
+    }
+
+    private Movie(JSONObject jsonObject) throws JSONException {
         this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
         this.overView = jsonObject.getString("overview");
@@ -69,4 +108,10 @@ public class Movie implements Serializable {
     public String getId() {
         return id;
     }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
 }
