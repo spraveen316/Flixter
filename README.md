@@ -29,6 +29,7 @@ The following **optional** advanced user stories are implemented:
 * [X] **Stretch**: Video posts now play in full-screen using the [YouTubePlayerView](http://guides.codepath.com/android/Streaming-Youtube-Videos-with-YouTubePlayerView).
     * When clicking on a popular movie (i.e. a movie with average greater than 7 of more than 7) the video should be played immediately.
     * Less popular movie videos can be played from details page which shows an image preview that initiates a YouTube video.
+* [X] **Stretch**: Added rounded corners for the images using the [Picasso transformations](https://guides.codepath.com/android/Displaying-Images-with-the-Picasso-Library#other-transformations).
 
 The following **additional** features are implemented:
 

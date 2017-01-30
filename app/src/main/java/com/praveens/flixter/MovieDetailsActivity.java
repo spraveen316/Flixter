@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by praveens on 1/26/17.
@@ -48,6 +49,7 @@ public class MovieDetailsActivity extends Activity {
         rbStars.setRating(Float.valueOf(movie.getVote()));
 
         Picasso.with(getApplicationContext()).load(movie.getBackdropPath())
+                .transform(new RoundedCornersTransformation(10, 10))
                 .error(R.drawable.imageviewplaceholder)
                 .placeholder(R.drawable.imageviewplaceholder)
                 .into(ivImage);

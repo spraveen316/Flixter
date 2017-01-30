@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 import static android.R.attr.data;
 
 /**
@@ -110,6 +112,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
         Picasso.with(context).load(imagePath)
                 .error(R.drawable.imageviewplaceholder)
+                .transform(new RoundedCornersTransformation(10, 10))
                 .placeholder(R.drawable.imageviewplaceholder)
                 .into(defaultViewHolder.movieImage);
     }
@@ -118,6 +121,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
         Picasso.with(context).load(movie.getBackdropPath())
                 .error(R.drawable.imageviewplaceholder)
+                .transform(new RoundedCornersTransformation(10, 10))
                 .placeholder(R.drawable.imageviewplaceholder)
                 .into(popularViewHolder.movieImage);
     }
